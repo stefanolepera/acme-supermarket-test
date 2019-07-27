@@ -1,0 +1,1 @@
+export const getDiscountedItemsList = (itemsList, rule) => itemsList.filter(item => item.discount == rule.type);
