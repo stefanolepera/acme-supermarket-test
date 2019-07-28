@@ -1,6 +1,6 @@
-const apply1FreeDiscount = (items) => {
+const apply1FreeDiscount = (items, rule) => {
     if (items.length > 0) {
-        return items.reduce((acc, item) => item.price + acc, 0) - items[0].price;
+        return items.reduce((acc, item) => item.price + acc, 0) - rule.price;
     }
     return 0;
 }

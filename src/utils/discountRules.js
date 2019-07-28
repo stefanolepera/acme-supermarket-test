@@ -1,8 +1,8 @@
 import { getDiscountedItemsList } from '../utils/itemsUtil';
 
-export const getPricesAfterDiscount = (items, rules) => {
-    const fullPriceItems = getFullPriceItems(items);
-    const discountedItems = rules.map(rule => {
+export const getTotalPriceAfterDiscount = (items, rules) => {
+    const totalPriceNoDiscount = getTotalPriceNoDiscount(items);
+    const totalPriceWithDiscount = rules.map(rule => {
         const discountedItemsList = getDiscountedItemsList(items, rule);
         if (discountedItemsList.length > 0) {
             return rule.applyDiscount(discountedItemsList, rule);
@@ -10,23 +10,22 @@ export const getPricesAfterDiscount = (items, rules) => {
 
         return 0;
     })
-    .reduce((acc, item) => item + acc, 0);
-    return fullPriceItems + discountedItems;
+    .reduce((acc, price) => price + acc, 0);
+    return totalPriceNoDiscount + totalPriceWithDiscount;
 };
 
-export const getFullPriceItems = (items) => {
+export const getTotalPriceNoDiscount = (items) => {
     return items.filter(item => item.discount === undefined).reduce((acc, item) => item.price + acc, 0);
 };
 
-export const apply2x1Discount = (items) => {
+export const apply2x1Discount = (items, rule) => {
     const totalItems = Math.ceil(items.length / 2);
-    return items[0].price * totalItems;
+    return rule.price * totalItems;
 };
 
 export const applyBulkDiscount = (items, rule) => {
     if (items.length >= rule.quantity) {
-        return items.length * rule.newPrice;
+        return items.length * rule.price;
     }
-
     return items.reduce((acc, item) => item.price + acc, 0);
 };

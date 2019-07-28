@@ -5,18 +5,20 @@ const pricingRulesMock = [
     {
         name: 'Buy one get one free',
         type: '2x1',
+        price: 3.11,
         applyDiscount: apply2x1Discount
     },
     {
         name: 'Buy three or more and get a discount',
         quantity: 3,
-        newPrice: 4.50,
+        price: 4.50,
         type: 'bulk',
         applyDiscount: applyBulkDiscount
     },
     {
         name: 'The first item of that type is free',
         type: '1free',
+        price: 1.20,
         applyDiscount: apply1FreeDiscount
     }
 ];

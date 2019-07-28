@@ -1,5 +1,5 @@
 import products from '../data/products';
-import { getPricesAfterDiscount } from '../utils/discountRules';
+import { getTotalPriceAfterDiscount } from '../utils/discountRules';
 
 class Basket {
     constructor(pricingRules) {
@@ -12,13 +12,15 @@ class Basket {
     }
 
     add(item) {
-        if (item && products[item]) {
-            this.itemsList.push(products[item]);
+        if (!item || !products[item]) {
+            throw new Error('Please provide a valid product');
         }
+
+        this.itemsList.push(products[item]);
     }
 
     total() {
-        const totalPrice = getPricesAfterDiscount(this.itemsList, this.pricingRules);
+        const totalPrice = getTotalPriceAfterDiscount(this.itemsList, this.pricingRules);
         return `£${totalPrice}`;
     }
 }

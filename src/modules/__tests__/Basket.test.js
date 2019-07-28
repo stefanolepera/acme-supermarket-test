@@ -1,7 +1,5 @@
 import Basket from '../Basket';
 import pricingRules from '../../data/pricingRules';
-import pricingRulesMock from '../../__mocks__/pricingRulesMock';
-import productsMock from '../../__mocks__/producstMock';
 import expect from 'expect';
 
 describe('Basket Class', () => {
@@ -12,24 +10,18 @@ describe('Basket Class', () => {
     });
 
     describe('add method tests', () => {
-        let basket;
-        beforeEach(() => {
-            basket = new Basket(pricingRules);
-        });
-    
         it('should correctly add a new item', () => {
+            const basket = new Basket(pricingRules);
             basket.add('SR1');
             expect(basket.itemsList).toHaveLength(1);
         });
     
-        it('should correctly NOT add a new item if undefined', () => {
-            basket.add();
-            expect(basket.itemsList).toHaveLength(0);
+        it('should throw and error if no item is provided', () => {
+            expect(() => new Basket(pricingRules).add()).toThrow('Please provide a valid product');
         });
     
-        it('should correctly NOT add a new item if not contained in products', () => {
-            basket.add('SR2');
-            expect(basket.itemsList).toHaveLength(0);
+        it('should throw and error if the provided item is not contained in products', () => {
+            expect(() => new Basket(pricingRules).add('FR2')).toThrow('Please provide a valid product');
         });
     });
 
